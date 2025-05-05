@@ -1,0 +1,21 @@
+3. Scrieti un program pentru talk intre mai multe persoane, folosind
+ semnale, in felul urmator:
+ - fiecare byte de informatie care trebuie trimis este scris pe 8 biti iar
+ secventa de biti este trimisa ca o succesiune de semnale SIGUSR1 si SIGUSR2;
+ se va asigura protectia la pierderea de semnale;
+ - va exista un program server si un program client; de la un terminal va
+ fi lansat procesul server, care isi afisaza PID-ul si asteapta sa fie
+ contactat; fiecare persoana angajata in talk va lansa de la cate un terminal
+ un proces client, caruia ii va transmite ca argument in linia de comanda
+ PID-ul serverului;
+ - la inceput, clientul transmite serverului PID-ul propriu, apoi, intr-un
+ ciclu, citeste cate o linie de text de la standard input, o parcurge
+ si trimite serverului caracterele din ea (inclusiv blank-urile si capul de
+ linie); daca intre timp primeste linii de mesaj de la server, le afisaza pe
+ standard output;
+- serverul isi instaleaza handlerele cu 'SA_SIGINFO', pentru a putea afla
+ PID-ul emitatorului; pe masura ce clienti noi se conecteaza, el retine
+ intr-o lista PID-urile acestora; cand primeste un caracter de mesaj de la
+ un client, il transmite tuturor celorlalte PID-uri din lista; daca vreun
+ PID devine invalid (eroarea 'ESRCH' pentru 'kill()'), il elimina din lista;
+ cand lista redevine vida, procesul server se termina.
