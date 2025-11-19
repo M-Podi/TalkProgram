@@ -76,7 +76,7 @@ void send_bit_to_client(pid_t client_pid, int bit)
         }
     }
 
-    // Adauga intarziere intre biti pentru a preveni pierderea semnalelor
+    // Intarziere intre biti pentru a preveni pierderea semnalelor
     usleep(1000);
 }
 // Trimite un byte complet catre un client
